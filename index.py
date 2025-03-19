@@ -1,5 +1,6 @@
 import cv2
 import os
+import sys
 
 video = cv2.VideoCapture("video.mp4")
 
@@ -27,10 +28,11 @@ def pixelFrameToAscii(frame):
     return newFrame
 
 def writeFrame(frame):
+    sys.stdout.write("\033[H")  # Move cursor to top-left (better than clearing screen)
     for row in frame:
         for val in row:
-            print(val + " ", end="")
-        print("")
+            sys.stdout.write(val + " ")
+        sys.stdout.write("\n")
 
 
 while True:
@@ -43,7 +45,7 @@ while True:
 
     if cv2.waitKey(10) & 0xFF == ord('q'):
         break
-    os.system("cls")
+    #os.system("cls")
 
 video.release()
 cv2.destroyAllWindows()
